@@ -28,7 +28,5 @@ res_elem.send_keys(res)
 sub_elem = browser.find_element(By.ID, 'solve')
 sub_elem.click()
 
-
-
 time.sleep(10)
 browser.quit()
