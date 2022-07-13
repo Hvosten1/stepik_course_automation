@@ -44,7 +44,7 @@ class TestUnit(unittest.TestCase):
             welcome_text = welcome_text_elt.text
 
             # с помощью assert проверяем, что ожидаемый текст совпадает с текстом на странице сайта
-            assert "Congratulations! You have successfully registered!" == welcome_text
+            assert "Congratulations! You have successfully registered!" == welcome_text, "Registration failed"
 
         finally:
             # ожидание чтобы визуально оценить результаты прохождения скрипта
@@ -90,7 +90,7 @@ class TestUnit(unittest.TestCase):
             welcome_text = welcome_text_elt.text
 
             # с помощью assert проверяем, что ожидаемый текст совпадает с текстом на странице сайта
-            assert "Congratulations! You have successfully registered!" == welcome_text
+            assert "Congratulations! You have successfully registered!" == welcome_text, "Registration failed"
 
 
             # ожидание чтобы визуально оценить результаты прохождения скрипта
