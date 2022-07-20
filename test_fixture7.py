@@ -7,7 +7,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import math
 
-answer = math.log(int(time.time()))
+res_mes = ''
+
 links = [
 'https://stepik.org/lesson/236895/step/1',
 'https://stepik.org/lesson/236896/step/1',
@@ -22,29 +23,35 @@ links = [
 @pytest.mark.parametrize('link', links)
 class TestAnswer:
     mes = ''
+
     def  test_open_and_answer(self, link):
+        global res_mes
         try:
+            answer = math.log(int(time.time()))
             browser = webdriver.Chrome()
             browser.get(link)
-            browser.implicitly_wait(5)
+            browser.implicitly_wait(10)
 
             answ_element = browser.find_element(By.CSS_SELECTOR, 'div.quiz-component.ember-view textarea')
-            answ_element.send_keys(answer)
+            answ_element.send_keys(str(answer))
 
             sub_element = browser.find_element(By.CSS_SELECTOR, 'div.attempt__actions button')
             sub_element.click()
 
-            WebDriverWait(browser,5).until(EC.visibility_of_element_located('div.smart-hints.ember-view.lesson__hint p').text)
+            mes_element = WebDriverWait(browser,5).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div.smart-hints.ember-view.lesson__hint p'))).text
+            mes = mes_element
 
-            mes_element = browser.find_element(By.CSS_SELECTOR,'div.smart-hints.ember-view.lesson__hint p')
-            mes = mes_element.text
+            try:
+                assert mes == 'Correct!'
+            except AssertionError:
+                res_mes += mes
+                print(res_mes)
 
-            assert mes == 'Correct!' , print(mes)
 
 
 
         finally:
-            time.sleep(10)
+            time.sleep(2)
             browser.quit()
 
 
